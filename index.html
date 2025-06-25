@@ -1,74 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Visualizador de Audio</title>
-  <script src="https://cdn.jsdelivr.net/npm/audiomotion-analyzer@latest/dist/audioMotion-analyzer.min.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: linear-gradient(120deg, #111, #222);
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    h1 {
-      margin-bottom: 20px;
-      font-size: 2em;
-      text-shadow: 0 0 10px #0ff;
-    }
-
-    #analyzer {
-      width: 90vw;
-      height: 300px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(0,255,255,0.3);
-    }
-
-    audio {
-      margin-top: 20px;
-      width: 300px;
-      filter: drop-shadow(0 0 5px cyan);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WavePlay</title>
+    <script src="https://cdn.jsdelivr.net/npm/audiomotion-analyzer@latest/dist/audioMotion-analyzer.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #282828;
+            color: white;
+        }
+        
+    </style>
 </head>
 <body>
-  <h1>Visualizador de Audio</h1>
+	<audio id="audio" controls>
+	  <source src="Sin título.wav" type="audio/mpeg">
+	  Tu navegador no soporta audio HTML5.
+	</audio>
+   <canvas id="analyzer"></canvas>
+   <script>
+     const audio = document.getElementById('audio');
 
-  <canvas id="analyzer"></canvas>
-
-  <audio id="audio" controls>
-    <source src="sin título.wav" type="audio/mpeg">
-    Tu navegador no soporta el elemento de audio.
-  </audio>
-
-  <script>
-    const audio = document.getElementById('audio');
-
-    const audioMotion = new AudioMotionAnalyzer(
-      document.getElementById('analyzer'),
-      {
-        source: audio,
-        height: 300,
-        mode: 10, // modo espiral, puedes probar con otros: 2, 3, 10, etc.
-        gradient: 'rainbow',
-        showScaleX: false,
-        showPeaks: true,
-        barSpace: 0.8,
-        mirror: true,
-        useCanvas: true
-      }
-    );
-  </script>
+     const audioMotion = new AudioMotionAnalyzer(
+       document.getElementById('analyzer'), {
+         source: audio,
+         height: 200,
+         mode: 2, // tipo de visualización
+         gradient: 'prism',
+         showScaleX: true
+       }
+     );
+   </script>
 </body>
 </html>
