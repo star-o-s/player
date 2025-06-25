@@ -77,16 +77,33 @@
   <div class="info">Cronium - CR005 (Original Mix)</div>
 
   <script>
-    const wavesurfer = WaveSurfer.create({
-      container: '#waveform',
-      waveColor: '#aaa',
-      progressColor: '#00BFFF',
-      barWidth: 4,
-      barRadius: 4,
-      height: 80,
-      responsive: true,
-      normalize: true,
-    });
+	  const wavesurfer = WaveSurfer.create({
+	    container: '#waveform',
+	    waveColor: '#aaa',
+	    progressColor: '#00BFFF',
+	    barWidth: 4,
+	    barRadius: 4,
+	    height: 80,
+	    responsive: true,
+	    normalize: true,
+	    drawBars: true,
+	    barGap: 1,
+	    plugins: [
+	      WaveSurfer.timeline.create()
+	    ],
+	    renderFunction: (ctx, x, y, width, height) => {
+	      // Sombra antes de dibujar
+	      ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+	      ctx.shadowBlur = 5;
+	      ctx.shadowOffsetY = 2;
+
+	      // Barra
+	      ctx.fillRect(x, y, width, height);
+
+	      // Quitar sombra (opcional si hay otros elementos)
+	      ctx.shadowColor = 'transparent';
+	    }
+	  });
 
     wavesurfer.load('song.wav'); // Cambia esto por la ruta real de tu mp3
 
