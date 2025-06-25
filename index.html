@@ -1,90 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WavePlay</title>
-    <script src="https://unpkg.com/wavesurfer.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background: #282828;
-            color: white;
-        }
-        #waveform {
-            width: 80%;
-            margin: 20px 0;
-        }
-        button {
-            background: #404040;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-			color: white;
-		    font-weight: bold;
-        }
-		button:hover {
-		    background-color: #555;
-		}
-		.custom-file-upload {
-		    display: inline-block;
-		    padding: 10px 20px;
-		    font-size: 16px;
-		    font-weight: bold;
-		    color: white;
-		    background-color: #404040;
-		    border-radius: 5px;
-		    cursor: pointer;
-		    transition: background 0.3s;
-		}
+  <meta charset="UTF-8">
+  <title>Visualizador de Audio</title>
+  <script src="https://cdn.jsdelivr.net/npm/audiomotion-analyzer@latest/dist/audioMotion-analyzer.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-		.custom-file-upload:hover {
-		    background-color: #555;
-		}
-    </style>
+    body {
+      background: linear-gradient(120deg, #111, #222);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2em;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    #analyzer {
+      width: 90vw;
+      height: 300px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,255,255,0.3);
+    }
+
+    audio {
+      margin-top: 20px;
+      width: 300px;
+      filter: drop-shadow(0 0 5px cyan);
+    }
+  </style>
 </head>
 <body>
+  <h1>Visualizador de Audio</h1>
 
-   
-    <input type="file" id="audioFile" accept="audio/*" hidden>
-	<label for="audioFile" class="custom-file-upload">Select File</label>
-    <div id="waveform"></div>
-    <button id="playPause">Play</button>
-	
-	
-    <script>
-        let wavesurfer = WaveSurfer.create({
-            container: '#waveform',
-            waveColor: 'white',
-            progressColor: '#14A6FA',
-			barRadius: 60,             // Bordes redondeados en barras
-            barWidth: 5,
-            height: 100,
-			cursorWidth: 0 // Esto oculta el cursor
-        });
+  <canvas id="analyzer"></canvas>
 
-        document.getElementById('audioFile').addEventListener('change', function(event) {
-            let file = event.target.files[0];
-            if (file) {
-                let url = URL.createObjectURL(file);
-                wavesurfer.load(url);
-            }
-        });
+  <audio id="audio" controls>
+    <source src="sin título.wav" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
 
-        document.getElementById('playPause').addEventListener('click', function() {
-            wavesurfer.playPause();
-            this.textContent = wavesurfer.isPlaying() ? 'Pausa' : 'Play';
-        });
+  <script>
+    const audio = document.getElementById('audio');
 
-    </script>
-
+    const audioMotion = new AudioMotionAnalyzer(
+      document.getElementById('analyzer'),
+      {
+        source: audio,
+        height: 300,
+        mode: 10, // modo espiral, puedes probar con otros: 2, 3, 10, etc.
+        gradient: 'rainbow',
+        showScaleX: false,
+        showPeaks: true,
+        barSpace: 0.8,
+        mirror: true,
+        useCanvas: true
+      }
+    );
+  </script>
 </body>
 </html>
