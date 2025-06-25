@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reproductor Estilo SoundCloud</title>
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <style>
+    body {
+      background-color: #777;
+      font-family: sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #player {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    #playBtn {
+      width: 60px;
+      height: 60px;
+      background-color: #00BFFF;
+      border: none;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #playBtn:hover {
+      background-color: #1E90FF;
+    }
+
+    #playBtn svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+
+    #waveform {
+      width: 600px;
+      height: 128px;
+    }
+
+    .info {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 700px) {
+      #waveform {
+        width: 90vw;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="player">
+    <button id="playBtn">
+      <svg id="playIcon" viewBox="0 0 60 60">
+        <polygon points="20,15 50,30 20,45" />
+      </svg>
+    </button>
+    <div id="waveform"></div>
+  </div>
+
+  <div class="info">Cronium - CR005 (Original Mix)</div>
+
+  <script>
+    const wavesurfer = WaveSurfer.create({
+      container: '#waveform',
+      waveColor: '#aaa',
+      progressColor: '#00BFFF',
+      barWidth: 4,
+      barRadius: 4,
+      height: 80,
+      responsive: true,
+      normalize: true,
+    });
+
+    wavesurfer.load('tu-audio.mp3'); // Cambia esto por la ruta real de tu mp3
+
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+
+    let isPlaying = false;
+
+    playBtn.addEventListener('click', () => {
+      wavesurfer.playPause();
+    });
+
+    wavesurfer.on('play', () => {
+      isPlaying = true;
+      playIcon.innerHTML = '<rect x="18" y="15" width="8" height="30"/><rect x="34" y="15" width="8" height="30"/>';
+    });
+
+    wavesurfer.on('pause', () => {
+      isPlaying = false;
+      playIcon.innerHTML = '<polygon points="20,15 50,30 20,45" />';
+    });
+  </script>
+
+</body>
+</html>
