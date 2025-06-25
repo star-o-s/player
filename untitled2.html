@@ -79,7 +79,7 @@
   <script>
 	  const wavesurfer = WaveSurfer.create({
 	    container: '#waveform',
-	    waveColor: '#aaa',
+	    waveColor: '#00BFFF',
 	    progressColor: '#00BFFF',
 	    barWidth: 4,
 	    barRadius: 4,
@@ -88,22 +88,34 @@
 	    normalize: true,
 	    drawBars: true,
 	    barGap: 1,
-	    plugins: [
-	      WaveSurfer.timeline.create()
-	    ],
-	    renderFunction: (ctx, x, y, width, height) => {
-	      // Sombra antes de dibujar
-	      ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
-	      ctx.shadowBlur = 5;
+	    renderFunction: (ctx, x, y, width, height, params) => {
+	      const borderWidth = 2; // Tamaño del borde
+
+	      // Sombra
+	      ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+	      ctx.shadowBlur = 4;
 	      ctx.shadowOffsetY = 2;
 
-	      // Barra
-	      ctx.fillRect(x, y, width, height);
+	      // Dibuja borde (más grande)
+	      ctx.fillStyle = '#ffffff'; // Color del borde
+	      ctx.fillRect(x - borderWidth / 2, y - borderWidth / 2, width + borderWidth, height + borderWidth);
 
-	      // Quitar sombra (opcional si hay otros elementos)
-	      ctx.shadowColor = 'transparent';
+	      // Relleno
+	      ctx.shadowColor = 'transparent'; // Quitar sombra del relleno
+	      ctx.fillStyle = '#00BFFF'; // Color de la barra
+	      ctx.fillRect(x, y, width, height);
 	    }
 	  });
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 
     wavesurfer.load('song.wav'); // Cambia esto por la ruta real de tu mp3
 
