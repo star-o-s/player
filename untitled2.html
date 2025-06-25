@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Reproductor Estilo SoundCloud</title>
+  <title>Reproductor con Borde y Sombra</title>
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <style>
     body {
@@ -77,64 +77,52 @@
   <div class="info">Cronium - CR005 (Original Mix)</div>
 
   <script>
-	  const wavesurfer = WaveSurfer.create({
-	    container: '#waveform',
-	    waveColor: '#00BFFF',
-	    progressColor: '#00BFFF',
-	    barWidth: 4,
-	    barRadius: 4,
-	    height: 80,
-	    responsive: true,
-	    normalize: true,
-	    drawBars: true,
-	    barGap: 1,
-	    renderFunction: (ctx, x, y, width, height, params) => {
-	      const borderWidth = 2; // Tamaño del borde
+    const wavesurfer = WaveSurfer.create({
+      container: '#waveform',
+      waveColor: '#00BFFF',
+      progressColor: '#00BFFF',
+      barWidth: 4,
+      barRadius: 4,
+      height: 80,
+      responsive: true,
+      normalize: true,
+      drawBars: true,
+      barGap: 1,
+      renderFunction: (ctx, x, y, width, height) => {
+        const borderWidth = 2;
 
-	      // Sombra
-	      ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-	      ctx.shadowBlur = 4;
-	      ctx.shadowOffsetY = 2;
+        // Sombra del borde
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetY = 2;
 
-	      // Dibuja borde (más grande)
-	      ctx.fillStyle = '#ffffff'; // Color del borde
-	      ctx.fillRect(x - borderWidth / 2, y - borderWidth / 2, width + borderWidth, height + borderWidth);
+        // Dibuja borde (más grande)
+        ctx.fillStyle = '#ffffff'; // Borde blanco
+        ctx.fillRect(x - borderWidth / 2, y - borderWidth / 2, width + borderWidth, height + borderWidth);
 
-	      // Relleno
-	      ctx.shadowColor = 'transparent'; // Quitar sombra del relleno
-	      ctx.fillStyle = '#00BFFF'; // Color de la barra
-	      ctx.fillRect(x, y, width, height);
-	    }
-	  });
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
+        // Relleno (sin sombra)
+        ctx.shadowColor = 'transparent';
+        ctx.fillStyle = '#00BFFF'; // Azul central
+        ctx.fillRect(x, y, width, height);
+      }
+    });
 
-    wavesurfer.load('song.wav'); // Cambia esto por la ruta real de tu mp3
+    // Carga tu archivo de audio
+    wavesurfer.load('song.wav'); // Cambia por tu archivo real
 
+    // Control del botón de reproducción
     const playBtn = document.getElementById('playBtn');
     const playIcon = document.getElementById('playIcon');
-
-    let isPlaying = false;
 
     playBtn.addEventListener('click', () => {
       wavesurfer.playPause();
     });
 
     wavesurfer.on('play', () => {
-      isPlaying = true;
       playIcon.innerHTML = '<rect x="18" y="15" width="8" height="30"/><rect x="34" y="15" width="8" height="30"/>';
     });
 
     wavesurfer.on('pause', () => {
-      isPlaying = false;
       playIcon.innerHTML = '<polygon points="20,15 50,30 20,45" />';
     });
   </script>
