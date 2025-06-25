@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WavePlay</title>
+    <script src="https://unpkg.com/peaks.js/dist/peaks.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #282828;
+            color: white;
+        }
+        #waveform {
+            width: 80%;
+            margin: 20px 0;
+        }
+        button {
+            background: #404040;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+			color: white;
+		    font-weight: bold;
+        }
+		button:hover {
+		    background-color: #555;
+		}
+		.custom-file-upload {
+		    display: inline-block;
+		    padding: 10px 20px;
+		    font-size: 16px;
+		    font-weight: bold;
+		    color: white;
+		    background-color: #404040;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    transition: background 0.3s;
+		}
+
+		.custom-file-upload:hover {
+		    background-color: #555;
+		}
+    </style>
+</head>
+<body>
+	<audio id="audio" controls>
+	  <source src="tu-audio.mp3" type="audio/mpeg">
+	</audio>
+
+	<div id="waveform-container" style="width: 100%; height: 100px;"></div>
+    
+    <input type="file" id="audioFile" accept="audio/*" hidden>
+	<label for="audioFile" class="custom-file-upload">Select File</label>
+    <div id="waveform"></div>
+    <button id="playPause">Play</button>
+
+	<script>
+	  document.addEventListener('DOMContentLoaded', function () {
+	    const options = {
+	      containers: {
+	        overview: document.getElementById('waveform-container')
+	      },
+	      mediaElement: document.getElementById('audio'),
+	      height: 100,
+	      zoomLevels: [512, 1024, 2048, 4096],
+	      keyboard: true,
+	      asyncAudioBuffer: true,
+	    };
+
+	    Peaks.init(options, function (err, peaks) {
+	      if (err) {
+	        console.error('Error al inicializar Peaks.js:', err);
+	        return;
+	      }
+
+	      // Puedes hacer cosas con la instancia 'peaks' aquí:
+	      console.log('Peaks inicializado', peaks);
+
+	      // Ejemplo: Añadir un marcador en el segundo 2
+	      peaks.markers.add({
+	        time: 2,
+	        labelText: 'Inicio interesante',
+	        color: '#ff0000'
+	      });
+	    });
+	  });
+	</script>
+
+</body>
+</html>
